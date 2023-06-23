@@ -11,6 +11,8 @@ using System.Drawing;
 using System.Threading;
 using MathNet.Numerics.Optimization.ObjectiveFunctions;
 using MathNet.Numerics.Integration;
+using System.Runtime.CompilerServices;
+using System.Collections;
 
 namespace ProyectoPruebas
 {
@@ -48,7 +50,7 @@ namespace ProyectoPruebas
             }
         }
 
-        static int tableWidth = 110;
+        static int tableWidth = 160;
         #endregion
 
         //static List<double> xi = new List<double>() {
@@ -65,14 +67,98 @@ namespace ProyectoPruebas
              9.81,9.7487,9.6879,9.6278,9.5682};
         static void Main(string[] args)
         {
+            //MetodoEulerSEDO(new List<Expr>() { Expr.Parse("-3*Y1+Y2"), Expr.Parse("-4*Y1-3*Y2") }, 0, new List<double>() { 5, 6 }, 0.1, 0.5);
+            //List<Valores> listasValores = new List<Valores>();
+            //listasValores.Add(new Valores() { valores = new List<double>() { 1, 2, 3 } });
+            //listasValores.Add(new Valores() { valores = new List<double>() { 4,5, 6 } });
+            //listasValores.Add(new Valores() { valores = new List<double>() { 6, 3, 6 } });
+            //listasValores.Add(new Valores() { valores = new List<double>() { 8, 7,6} });
+
+            //listasValores[0].valores[4] = 2;
+            //// Obtener el tamaño de las listas
+            //int numRows = listasValores[0].valores.Count;
+            //int numCols = listasValores.Count;
+
+            //// Recorrer las listas y mostrar los valores en el orden deseado
+            //for (int i = 0; i < numRows; i++)
+            //{
+            //    for (int j = 0; j < numCols; j++)
+            //    {
+            //        double value = 0;
+            //       for(int y=0; y<numCols; y++)
+            //        {
+            //            listasValores[j].valores[i] += listasValores[y].valores[i];
+
+            //        }
+            //        // listasValores[j].valores[i]= listasValores[j].valores[i]+listasValores[j+1].valores[i];
+            //         value = listasValores[j].valores[i];
+            //        Console.Write(value + " ");
+
+            //    }
+
+            //    Console.WriteLine();
+            //}
+           RungeKuttaSEDO(new List<Expr>() { Expr.Parse("-3*Y1+Y2"), Expr.Parse("-4*Y1-3*Y2") }, 0, new List<double> { 5, 6 }, 0.1, 0.5);
+           // RungeKuttaSEDO(new List<Expr>() { Expr.Parse("-0.5*Y1"), Expr.Parse("4+(-0.3*Y2)+(-0.1*Y1)") }, 0, new List<double>() { 4, 6 }, 0.5, 2);
+           MetodoEulerSEDO(new List<Expr>() { Expr.Parse("-3*Y1+Y2"), Expr.Parse("-4*Y1-3*Y2") }, 0, new List<double> { 5, 6 }, 0.1, 0.5);
+
+            // si no dan h entonces usar la formula de (b-a)/n 
+            // MetodoEulerSEDO(new List<Expr>() { Expr.Parse("3*Y1-2*Y2"), Expr.Parse("2*Y1-2*Y2") }, 0, new List<double>() { 2, 0 }, 0.05, 1);
+            //MetodoEulerSEDO(new List<Expr>() { Expr.Parse("(-2/25)*Y1+(1/50)*Y2"), Expr.Parse("(2/25)*Y1-(2/25)*Y2") }, 0, new List<double>() { 25, 0 }, 5, 75);
+            //  RungeKutta3erOrden(Expr.Parse("pow(e,x+y)"), 1, 0, 0.1, 1.2);
+
+            //RungeKutta4toOrden(Expr.Parse("pow(e,x+y)"), 1, 0, 0.05, 1.2);
+            // RungeKuttaOrden2(Expr.Parse("x*sqrt(y)"),1,4,0.2,1.6);
+            // Expr expression = Expr.Parse("-0.5*Y1*Y2");
+            //Console.WriteLine( expression.Evaluate(new Dictionary<string, FloatingPoint> { { "Y1", 2 },{ "Y2",2} }).RealValue);
+
+
+            ////MetodoEuler(Expr.Parse("0.1*sqrt(y)+0.4*x^2"), 10, 2, 4, 2.5);
+            //MetodoEulerMejorado(Expr.Parse("2*x*y"), 5, 1, 1, 1.5);
+
+            //            MetodoEuler(Expr.Parse("(pow(y,0.5)/(10))+((4*x^2)/(40))"),10,2,4,2.5);
+
+            //double valor = expression.Evaluate(new Dictionary<string, FloatingPoint> { { "x", 2 }, { "y", 4 } }).RealValue;
+            //Console.WriteLine(valor);
+            //Pruebas
+            // ReglaSimpson(Expr.Parse("sqrt(1+pow(x,3))"), 12, 0, 1);
+            // ReglaSimpson(Expr.Parse("0.2+25*x-200*x^2+675*x^3-900*x^4+400*x^5"), 4,0, 0.8);
+
             //  ExtrapolacionRichardson(Expr.Parse("-0.1*x^4-0.15*x^3-0.5*x^2-0.25*x+1.2"), 0.5, 0.5);
             // ExtrapolacionRichardson(Expr.Parse("sin(x^2)"),0.5,0.5);
             //  IntegracionRomberg("ln(4*x^2+4)", -3, 3, 4);
-            // IntegracionRomberg("e^(-0.5*x)", 0, 1, 3);
+
+            // Para Ejercicios
+            //IntegracionRomberg("pow(tan(x),3)+pow(tan(x),5)", 0, 1, 4);
+            //Console.WriteLine("\n\n");
+            // ReglaSimpson(Expr.Parse("(cos(x))/(7*pow(x,3)+1)"), 12, -1, 1);
+
+            // ReglaSimpson(Expr.Parse("pow((sqrt(x)+3),2)/(2*sqrt(x))"), 9,4, 9);
+
+            //ReglaTrapecioPasos(Expr.Parse("(x^3)+3*x"), 12, 1, 2);
+
+
+            //double valor1 = ReglaTrapecio(Expr.Parse("x^3"), 12, 1, 2);
+            //double valor2 = ReglaTrapecio(Expr.Parse("3*x"), 12, 1, 2);
+            //double valorTotal1 = ReglaTrapecio(Expr.Parse($"{valor1}*x^3"), 12, -1, 1);
+            //valorTotal1 = valor1 * valorTotal1;
+            //double valorTotal2 = ReglaTrapecio(Expr.Parse($"{valor2}*x^2"), 12, -1, 1);
+
+
+            // ReglaSimpson(Expr.Parse("pow(cos(x),2)"), 4, 0, (Math.PI/4));
+
+            //double total = valorTotal1 + valorTotal2;
+            ////Console.Write(total);
+            //ReglaTrapecioPasos(Expr.Parse("x^3"), 12, 1, 2);
+            //ReglaTrapecioPasos(Expr.Parse($"{valor1}*x^3"), 12, -1, 1);
+            //ReglaTrapecioPasos(Expr.Parse("3*x"), 12, 1, 2);
+            //ReglaTrapecioPasos(Expr.Parse($"{valor2}*x^2"), 12, -1, 1);
+            //Console.WriteLine( "\n"+$"Primer valor {valorTotal1}+{valorTotal2} = "+total);
+
             //Console.WriteLine( ReglaTrapecio("ln(4*x^2+4)", 2,-3, 3));
-            // ReglaTrapecio(Expr.Parse("(e^x)/x"), 16, 2, 4);
+            // ReglaTrapecio(Expr.Parse("()"), 16, 2, 4);
             //ReglaTrapecio(Expr.Parse("0.2+25*x-200*x^2+675*x^3-900*x^4+400*x^5"), 10, 0, 0.8);
-            //ReglaSimpson(Expr.Parse("(1+x^3)^(1/2)"),12,0,1);
+            //ReglaSimpson(Expr.Parse("(cos(x))/((7*pow(x,3))+1)"),12,-1,1);
             //Console.Clear();
             //PrintLine();
             //PrintRow("i", "Xi", "F(Xi)");
@@ -83,50 +169,50 @@ namespace ProyectoPruebas
             //Console.ReadLine();
             // Console.WriteLine(PolinomioLangrage(new List<double>() { 2.4,1.5,2.4,1.8,1.8,2.9,1.2,3,1.2}, new List<double>() { 2.9,2.1,2.3,2.1,1.8,2.7,1.5,2.9,1.5}));
 
-          //  Console.WriteLine("Polinomio lagrange:");
-           // Console.WriteLine(PolinomioLangrage(new List<double> { 2.4,1.5,2.5,1.8,1.9,2.9,1.2,3,1.3},new List<double>() { 2.9,2.1,2.3,2.1,1.8,2.7,1.5,2.9,1.5}));
+            //  Console.WriteLine("Polinomio lagrange:");
+            // Console.WriteLine(PolinomioLangrage(new List<double> { 2.4,1.5,2.5,1.8,1.9,2.9,1.2,3,1.3},new List<double>() { 2.9,2.1,2.3,2.1,1.8,2.7,1.5,2.9,1.5}));
             //Console.WriteLine("Resultado: "+PolinomioLangrage(new List<double> { 2.4, 1.5, 2.5, 1.8, 1.9, 2.9, 1.2, 3, 1.3 }, new List<double>() { 2.9, 2.1, 2.3, 2.1, 1.8, 2.7, 1.5, 2.9, 1.5 }).Evaluate(new Dictionary<string, FloatingPoint> { { "x", 2 } }).RealValue);
             //SplineCubic(xi, ai);
 
-          //  AjusteCurva(new List<double> {-50,-30,0,60,90,110}, new List<double> { 1270,1280,1350,1480,1580,1700 }, 1);
+            //  AjusteCurva(new List<double> {-50,-30,0,60,90,110}, new List<double> { 1270,1280,1350,1480,1580,1700 }, 1);
             //AjusteCurva(new List<double> { 1,2,3,4,5,6,7}, new List<double> { 0.5,2.5,2.0,4.0,3,5,6.0,5.5}, 1);
 
-         //   double[] x = { 2.4, 1.5, 2.5, 1.8, 1.9, 2.9, 1.2, 3, 1.3 };
-         //   double[] y = { 2.9, 2.1, 2.3, 2.1, 1.8, 2.7, 1.5, 2.9, 1.5 };
-         //   double point = 2;
+            //   double[] x = { 2.4, 1.5, 2.5, 1.8, 1.9, 2.9, 1.2, 3, 1.3 };
+            //   double[] y = { 2.9, 2.1, 2.3, 2.1, 1.8, 2.7, 1.5, 2.9, 1.5 };
+            //   double point = 2;
 
-         //   // Calcular el valor interpolado
-         //   double interpolatedValue = NewtonInterpolation(x, y, point);
-         ////  Console.WriteLine("Valor interpolado: " + interpolatedValue);
+            //   // Calcular el valor interpolado
+            //   double interpolatedValue = NewtonInterpolation(x, y, point);
+            ////  Console.WriteLine("Valor interpolado: " + interpolatedValue);
 
-         //   // Mostrar la matriz de diferencias divididas
-         //   Console.WriteLine("Matriz de diferencias divididas:");
-         //   double[,] dividedDifferences = CalculateDividedDifferences(x, y);
-         //   int n = x.Length;
-         //   for (int i = 0; i < n; i++)
-         //   {
-         //       for (int j = 0; j < n - i; j++)
-         //       {
-         //           if (i == 0)
-         //           {
-         //               Console.ForegroundColor = ConsoleColor.Yellow;
-         //               Console.Write(dividedDifferences[i, j] + "     ");
-         //           }
-         //           else
-         //           {
-         //               Console.ForegroundColor = ConsoleColor.White;
-         //               Console.Write(dividedDifferences[i, j] + "     ");
-         //           }
-         //       }
-         //       Console.WriteLine();
-         //   }
-         //   Console.ForegroundColor = ConsoleColor.White;
-         //   SymbolicExpression polynomial = NewtonInterpolation(x, y);
+            //   // Mostrar la matriz de diferencias divididas
+            //   Console.WriteLine("Matriz de diferencias divididas:");
+            //   double[,] dividedDifferences = CalculateDividedDifferences(x, y);
+            //   int n = x.Length;
+            //   for (int i = 0; i < n; i++)
+            //   {
+            //       for (int j = 0; j < n - i; j++)
+            //       {
+            //           if (i == 0)
+            //           {
+            //               Console.ForegroundColor = ConsoleColor.Yellow;
+            //               Console.Write(dividedDifferences[i, j] + "     ");
+            //           }
+            //           else
+            //           {
+            //               Console.ForegroundColor = ConsoleColor.White;
+            //               Console.Write(dividedDifferences[i, j] + "     ");
+            //           }
+            //       }
+            //       Console.WriteLine();
+            //   }
+            //   Console.ForegroundColor = ConsoleColor.White;
+            //   SymbolicExpression polynomial = NewtonInterpolation(x, y);
 
-         //   // Mostrar la fórmula
-         //   Console.WriteLine("Fórmula del polinomio interpolante de Newton:");
-         //   Console.WriteLine(polynomial.ExponentialSimplify());
-         //   Console.WriteLine(polynomial.ExponentialSimplify().Evaluate(new Dictionary<string, FloatingPoint> { { "x", 2 } }).RealValue);
+            //   // Mostrar la fórmula
+            //   Console.WriteLine("Fórmula del polinomio interpolante de Newton:");
+            //   Console.WriteLine(polynomial.ExponentialSimplify());
+            //   Console.WriteLine(polynomial.ExponentialSimplify().Evaluate(new Dictionary<string, FloatingPoint> { { "x", 2 } }).RealValue);
 
             //double[] x = { -1, 0, 1, 2 };
             //double[] y = { 0.5, 1, 2, 4 };
@@ -153,47 +239,477 @@ namespace ProyectoPruebas
             //// Mostrar la fórmula
             //Console.WriteLine("Fórmula del polinomio interpolante de Newton:");
             //Console.WriteLine(polynomial.ExponentialSimplify());
-            DerivacionNumericaTaylor(75, new List<double> { 0, 60, 120, 180, 240, 300 }, new List<double> { 0, 0.0824, 0.2747, 0.6502, 1.3851, 3.2229 });
-           // Console.WriteLine(Interpolate(150, new List<double> { 0, 60, 120, 180, 240, 300 }, new List<double> { 0, 0.0824, 0.2747, 0.6502, 1.3851, 3.2229 }));
+            //  DerivacionNumericaTaylor(75, new List<double> { 0, 60, 120, 180, 240, 300 }, new List<double> { 0, 0.0824, 0.2747, 0.6502, 1.3851, 3.2229 });
+            // Console.WriteLine(Interpolate(150, new List<double> { 0, 60, 120, 180, 240, 300 }, new List<double> { 0, 0.0824, 0.2747, 0.6502, 1.3851, 3.2229 }));
         }
 
-        static void DerivacionNumericaTaylor(double x,List<double> xi, List<double> yi)
+        // x0 seria a, xHallar seria b
+        static void MetodoEuler(Expr expression, int n, double x0, double yo, double xHallar)
+        {
+
+            List<EulerNormal> eulerNormals = new List<EulerNormal>();
+            EulerNormal eu = new EulerNormal()
+            {
+                i = 0,
+                xi = x0,
+                fxy = null,
+                yi = yo
+            };
+            eulerNormals.Add(eu);
+
+            double h = (xHallar - x0) / n;
+
+            for (int i = 1; i <= n; i++)
+            {
+                double xi = (eu.xi + h);
+                double fxy = expression.Evaluate(new Dictionary<string, FloatingPoint> { { "x", eu.xi }, { "y", eu.yi } }).RealValue;
+                double yi = eu.yi + h * fxy;
+                eu = new EulerNormal()
+                {
+                    i = i,
+                    xi = xi,
+                    fxy = fxy,
+                    yi = yi
+                };
+                eulerNormals.Add(eu);
+            }
+            PrintLine();
+            PrintRow("i", "xi", "f(xi,yi)", "yi");
+
+            for (int i = 0; i < eulerNormals.Count; i++)
+            {
+                string fxy;
+                if ((i - 1) != -1)
+                {
+                    fxy = $"f({eulerNormals[i - 1].xi.Round(5).ToString()},{eulerNormals[i - 1].yi.Round(5).ToString()})= " + eulerNormals[i].fxy.Value.Round(5).ToString();
+                }
+                else
+                    fxy = "--";
+
+
+                PrintRow(eulerNormals[i].i.ToString(), eulerNormals[i].xi.Round(5).ToString(), eulerNormals[i].fxy.ToString() == null ? "--" : fxy, eulerNormals[i].yi.Round(5).ToString());
+            }
+            PrintLine();
+        }
+        static void MetodoEulerMejorado(Expr expression, int n, double x0, double yo, double xHallar)
+        {
+            double h = (xHallar - x0) / n;
+
+            List<EulerMejorado> eulerMejorados = new List<EulerMejorado>();
+
+            EulerMejorado eulerMejorado = new EulerMejorado()
+            {
+                i = 0,
+                xn = x0,
+                yn = yo,
+                ynn = yo + h * (expression.Evaluate(new Dictionary<string, FloatingPoint> { { "x", x0 },
+                    { "y", yo}
+                }).RealValue),
+                xnuno = x0 + h
+            };
+            eulerMejorado.YnUno = yo + ((h / 2) * ((expression.Evaluate(new Dictionary<string, FloatingPoint> { { "x", x0 },
+                    { "y", yo}
+                }).RealValue) +
+                (expression.Evaluate(new Dictionary<string, FloatingPoint> { { "x", eulerMejorado.xnuno },
+                    { "y", eulerMejorado.ynn}
+                }).RealValue)));
+
+            eulerMejorados.Add(eulerMejorado);
+
+            for (int i = 1; i <= n; i++)
+            {
+
+                int ne = i;
+                double xn = eulerMejorado.xnuno;
+                double yn = eulerMejorado.YnUno;
+                double ynn = yn + h * (expression.Evaluate(new Dictionary<string, FloatingPoint> { { "x", xn},
+                    { "y", yn}
+                }).RealValue);
+                double xnUno = xn + h;
+                double ynUno = yn + ((h / 2) * ((expression.Evaluate(new Dictionary<string, FloatingPoint> { { "x", xn },
+                    { "y", yn}
+                }).RealValue) +
+                    (expression.Evaluate(new Dictionary<string, FloatingPoint> { { "x", xnUno },
+                    { "y", ynn}
+                    }).RealValue)));
+                eulerMejorado = new EulerMejorado()
+                {
+                    i = ne,
+                    xn = xn,
+                    yn = yn,
+                    ynn = ynn,
+                    xnuno = xnUno,
+                    YnUno = ynUno
+                };
+
+
+                eulerMejorados.Add(eulerMejorado);
+            }
+            PrintLine();
+
+            PrintRow("i", "xn", "yn", "(yn+1)*", "xn+1", "Yn+1");
+            PrintLine();
+            for (int i = 0; i < eulerMejorados.Count; i++)
+            {
+                PrintRow(eulerMejorados[i].i.ToString(), eulerMejorados[i].xn.ToString(), eulerMejorados[i].yn.ToString(), eulerMejorados[i].ynn.ToString(), eulerMejorados[i].xnuno.ToString(), eulerMejorados[i].YnUno.ToString());
+
+
+            }
+            PrintLine();
+            Console.WriteLine("Valor aproximado: " + eulerMejorados[eulerMejorados.Count() - 1].yn);
+        }
+
+        static void RungeKuttaOrden2(Expr expression, double x0, double y0, double h, double xAproximado)
+        {
+            List<RungeKutta2doOrden> rungeKutta2DoOrdens = new List<RungeKutta2doOrden>()
+            {
+                new RungeKutta2doOrden()
+                {
+                    nombre ="Metodo de Heun",
+                    a=0.5,
+                    b=0.5,
+                    q=1
+
+                },
+                 new RungeKutta2doOrden()
+                {
+                     nombre ="Metodo de Ralston",
+                    a=(1*1f/3*1f),
+                    b=(2*1f/3*1f),
+                    q=(3*1f/4*1f)
+
+                },
+                  new RungeKutta2doOrden()
+                {
+                      nombre ="Metodo de punto medio",
+                    a=0,
+                    b=1,
+                    q=0.5
+
+                }
+            };
+            for (int i = 0; i < rungeKutta2DoOrdens.Count; i++)
+            {
+                double a = rungeKutta2DoOrdens[i].a;
+                double b = rungeKutta2DoOrdens[i].b; //a2
+                double q = rungeKutta2DoOrdens[i].q;
+                Console.WriteLine(rungeKutta2DoOrdens[i].nombre + "\n");
+
+
+                PrintRow("x", "k1", "k2", "y (valor aproximado)", "yn+1");
+                double yn = y0;
+                for (double y = x0; y <= xAproximado; y += h)
+                {
+
+                    double k1 = expression.Evaluate(new Dictionary<string, FloatingPoint> { { "x", y},
+                    { "y", yn}
+                }).RealValue;
+                    double k2 = expression.Evaluate(new Dictionary<string, FloatingPoint> { { "x", (y)+(q*h)},
+                    { "y", yn+(q*h*k1)}
+                }).RealValue;
+                    PrintRow(y.ToString(), k1.ToString(), k2.ToString(), yn.ToString(), ((yn + (a * k1 + b * k2) * h)).ToString());
+                    yn = ((yn + (a * k1 + b * k2) * h));
+                }
+
+                Console.WriteLine("\n\n");
+            }
+        }
+        static void RungeKutta3erOrden(Expr expression, double x0, double y0, double h, double xAproximado)
+        {
+            double yn = y0;
+            PrintLine();
+            PrintRow("i", "Xn", "Yn", "K1", "K2", "K3", "Yn+1");
+            PrintLine();
+            int i = 0;
+            for (double x = x0; x <= xAproximado + h; x += h)
+            {
+
+                double k1 = expression.Evaluate(new Dictionary<string, FloatingPoint> { { "x", x},
+                    { "y", yn} }).RealValue;
+                double k2 = expression.Evaluate(new Dictionary<string, FloatingPoint> { { "x", x+(h/2*1f)},
+                    { "y",yn+(h/2)*k1 } }).RealValue;
+                double k3 = expression.Evaluate(new Dictionary<string, FloatingPoint> { { "x", x+h},
+                    { "y", yn-(h*k1)+(2*h*k2)} }).RealValue;
+                PrintRow(i.ToString(), x.ToString(), yn.ToString(), k1.ToString(), k2.ToString(), k3.ToString(), (yn + (h / 6) * (k1 + 4 * k2 + k3)).ToString());
+                i++;
+                yn = yn + (h / 6) * (k1 + 4 * k2 + k3);
+            }
+        }
+        static void RungeKutta4toOrden(Expr expression, double x0, double y0, double h, double xAproximado)
+        {
+            double yn = y0;
+            PrintLine();
+            PrintRow("i", "Xn", "Yn", "K1", "K2", "K3", "K4", "Yn+1");
+            PrintLine();
+            int i = 0;
+            for (double x = x0; x < xAproximado + h; x += h)
+            {
+
+                double k1 = expression.Evaluate(new Dictionary<string, FloatingPoint> { { "x", x},
+                    { "y", yn} }).RealValue;
+                double k2 = expression.Evaluate(new Dictionary<string, FloatingPoint> { { "x", x+(h/2*1f)},
+                    { "y",yn+(h/2)*k1 } }).RealValue;
+                double k3 = expression.Evaluate(new Dictionary<string, FloatingPoint> { { "x", x+h/2},
+                    { "y",(yn+(h/2)*k2)} }).RealValue;
+
+                double k4 = expression.Evaluate(new Dictionary<string, FloatingPoint> { { "x", x+h},
+                    { "y",yn+(h*k3)} }).RealValue;
+                PrintRow(i.ToString(), x.ToString(), yn.ToString(), k1.ToString(), k2.ToString(), k3.ToString(), k4.ToString(), (yn + ((h / 6) * (k1 + 2 * k2 + 2 * k3 + k4))).ToString());
+                i++;
+                yn = yn + ((h / 6) * (k1 + 2 * k2 + 2 * k3 + k4));
+            }
+        }
+
+        static void MetodoEulerSEDO(List<Expr> ecuaciones, double X0, List<double> Yi, double h, double xAproximar)
+        {
+
+
+            PrintLine();
+            PrintRow(GenerarColumnas(ecuaciones.Count).ToArray());
+            int j = 0;
+            for (double x = X0 + h; x <= xAproximar + h; x += h)
+            {
+                j++;
+                List<string> fila = new List<string>();
+                fila.Add(j.ToString());
+                fila.Add(x.ToString());
+                List<double> yi = new List<double>();
+
+                for (int i = 0; i < Yi.Count; i++)
+                {
+
+                    double Yn = Yi[i] + h * ecuaciones[i].Evaluate(generarVariables(Yi, x)).RealValue;
+                    yi.Add(Yn);
+                    fila.Add(Yn.ToString());
+                }
+                Yi = yi;
+                yi = new List<double>();
+                PrintRow(fila.ToArray());
+            }
+            PrintLine();
+        }
+        static Dictionary<string, FloatingPoint> generarVariables(List<double> Yi, double x0)
+        {
+            int n = Yi.Count;
+            var variables = new Dictionary<string, FloatingPoint>();
+            variables.Add("x", x0);
+            for (int i = 0; i < n; i++)
+            {
+                variables.Add($"Y{i + 1}", Yi[i]);
+            }
+            return variables;
+
+        }
+        static List<string> GenerarColumnas(int n)
+        {
+
+            List<String> columnas = new List<string>();
+            columnas.Add("N");
+            columnas.Add("Xi");
+            for (int i = 0; i < n; i++)
+            {
+                columnas.Add($"Y{i + 1}(Xi)");
+            }
+            return columnas;
+
+        }
+
+        static void RungeKuttaSEDO(List<Expr> ecuaciones, double t0, List<double> condiciones, double h, double tAproximar)
+        {
+            PrintLine();
+            List<dynamic> columnas= new List<dynamic>();
+
+            columnas.Add("I");
+            columnas.Add("Xi");
+            columnas.Add("K1");
+            columnas.Add("L1");
+            columnas.Add("K2");
+            columnas.Add("L2");
+            columnas.Add("K3");
+            columnas.Add("L3");
+            columnas.Add("K4");
+            columnas.Add("L4");
+            for(int i=0; i<condiciones.Count; i++)
+            {
+                columnas.Add($"Y{i}");
+            }
+            GenerarFilas(columnas);
+            List<Valores> ListValores = new List<Valores>();
+            Valores valores = new Valores() { valores = new List<double>() { 0, 0, 0, 0 } };
+            for (int i = 0; i < ecuaciones.Count; i++)
+            {
+                ListValores.Add(valores);
+                valores = new Valores() { valores = new List<double>() { 0, 0, 0, 0 } };
+            }
+            List<double> condicionesn = new List<double>();
+            int b = 0; 
+            for (double k = t0+h; k <= tAproximar; k += h)
+            {
+                b++;
+                List<dynamic> datos = new List<dynamic>();
+                datos.Add(b);
+                datos.Add(k);
+                
+                for (int i = 0; i < 4; i++)
+                {
+
+                    for (int j = 0; j < condiciones.Count; j++)
+                    {
+                        if (i == 0)
+                        {
+
+                            ListValores[j].valores[i] = h * ecuaciones[j].Evaluate(generarVariables(condiciones, k)).RealValue;
+                            datos.Add(ListValores[j].valores[i]);
+                        }
+                        else if (i == 1)
+                        {
+                            List<double> condicionesnn = new List<double>();
+
+                            for (int l = 0; l < condiciones.Count; l++)
+                            {
+                                condicionesnn.Add(condiciones[l] + (ListValores[l].valores[0] / 2));
+                            }
+
+                            ListValores[j].valores[i] = h * ecuaciones[j].Evaluate(generarVariables(condicionesnn, k + (h) / 2)).RealValue;
+                            datos.Add(ListValores[j].valores[i]);
+                        }
+                        else if (i == 2)
+                        {
+                            List<double> condicionesnn = new List<double>();
+
+                            for (int l = 0; l < condiciones.Count; l++)
+                            {
+                                condicionesnn.Add(condiciones[l] + (ListValores[l].valores[1] / 2));
+                            }
+
+                            ListValores[j].valores[i] = h * ecuaciones[j].Evaluate(generarVariables(condicionesnn, k + (h) / 2)).RealValue;
+                            datos.Add(ListValores[j].valores[i]);
+                        }
+                        else if (i == 3)
+                        {
+                            List<double> condicionesnn = new List<double>();
+
+                            for (int l = 0; l < condiciones.Count; l++)
+                            {
+
+
+                                condicionesnn.Add(condiciones[l] + (ListValores[l].valores[2]));
+                            }
+
+                            ListValores[j].valores[i] = h * ecuaciones[j].Evaluate(generarVariables(condicionesnn, k + h)).RealValue;
+                            datos.Add(ListValores[j].valores[i]);
+                        }
+
+                    }
+
+                }
+                condicionesn.AddRange(condiciones);
+              
+                for (int i = 0; i < condiciones.Count; i++)
+                {
+
+                    double n = condiciones[i];
+                    double nn = 0;
+                    for (int j = 0; j < 4; j++)
+                    {
+                        if (j == 0 || j == 3)
+                        {
+
+                           nn += (1 * 1f / 6 * 1f) * ListValores[i].valores[j];
+                        }
+                        else
+                        {
+                            nn += (1 * 1f / 6 * 1f) * 2*ListValores[i].valores[j];
+                        }
+                    }
+                    n += nn;
+                    condiciones[i] = n;
+                    datos.Add(condiciones[i]);
+                }
+
+                GenerarFilas(datos);
+            }
+
+
+        }
+        static void GenerarFilas(List<dynamic> datos)
+        {
+            List<String> datosString = new List<string>();
+            for(int i=0; i<datos.Count; i++)
+            {
+                datosString.Add(Convert.ToString(datos[i]));
+            }
+
+            PrintRow(datosString.ToArray());
+        }
+
+        public class Valores
+        {
+            public List<double> valores { get; set; }
+        }
+        public class RungeKutta2doOrden
+        {
+            public string nombre { get; set; }
+            public double a { get; set; }
+            public double q { get; set; }
+            public double b { get; set; }
+        }
+        public class EulerNormal
+        {
+            public int i { get; set; }
+            public double xi { get; set; }
+            public double? fxy { get; set; }
+            public double yi { get; set; }
+        }
+
+        public class EulerMejorado
+        {
+            public int i { get; set; }
+
+            public double xn { get; set; }
+            public double yn { get; set; }
+
+            public double ynn { get; set; } // (yn+1)^*
+            public double xnuno { get; set; } // (xn+1)
+            public double YnUno { get; set; } // (Yn+1)
+        }
+        static void DerivacionNumericaTaylor(double x, List<double> xi, List<double> yi)
         {
             double h = xi[1] - xi[0];
-             if( xi.FindIndex(xa => xa == x) ==0)
+            if (xi.FindIndex(xa => xa == x) == 0)
             {
                 double primerValor = -1 * Interpolate(x + (2 * h), xi, yi);
-                double segundoValor = 4* Interpolate(x + h, xi, yi);
-                double tercerValor = -3*Interpolate(x, xi, yi);
+                double segundoValor = 4 * Interpolate(x + h, xi, yi);
+                double tercerValor = -3 * Interpolate(x, xi, yi);
                 double totalNumerador = primerValor + segundoValor + tercerValor;
                 double denominador = 2 * h;
                 double fx = totalNumerador * 1f / denominador * 1f;
-                Console.WriteLine($"f'({x})= "+fx);
-                    
-                primerValor= -1 * Interpolate(x + (3 * h), xi, yi);
-                segundoValor= 4 * Interpolate(x + (2* h), xi, yi);
-                tercerValor = -5 * Interpolate(x+h, xi, yi);
-                double cuartoValor = 2* Interpolate(x, xi, yi);
+                Console.WriteLine($"f'({x})= " + fx);
+
+                primerValor = -1 * Interpolate(x + (3 * h), xi, yi);
+                segundoValor = 4 * Interpolate(x + (2 * h), xi, yi);
+                tercerValor = -5 * Interpolate(x + h, xi, yi);
+                double cuartoValor = 2 * Interpolate(x, xi, yi);
 
                 totalNumerador = primerValor + segundoValor + tercerValor + cuartoValor;
-                denominador =  Math.Pow(h, 2);
+                denominador = Math.Pow(h, 2);
                 fx = totalNumerador / denominador;
-                Console.WriteLine($"f''({x})= "+fx);
+                Console.WriteLine($"f''({x})= " + fx);
             }
-            else if(xi.FindIndex(xa=>xa==x)==yi.Count-1)
+            else if (xi.FindIndex(xa => xa == x) == yi.Count - 1)
             {
                 double primerValor = 3 * Interpolate(x + h, xi, yi);
                 double segundoValor = -4 * Interpolate(x - h, xi, yi);
-                double tercerValor =  Interpolate(x-(2*h), xi, yi);
+                double tercerValor = Interpolate(x - (2 * h), xi, yi);
                 double totalNumerador = primerValor + segundoValor + tercerValor;
                 double denominador = 2 * h;
                 double fx = totalNumerador * 1f / denominador * 1f;
                 Console.WriteLine($"f'({x})= " + fx);
 
                 primerValor = 2 * Interpolate(x, xi, yi);
-                segundoValor = -5 * Interpolate(x -h, xi, yi);
-                tercerValor = 4 * Interpolate(x -(2* h), xi, yi);
-                double cuartoValor = -1 * Interpolate(x-(3*h), xi, yi);
+                segundoValor = -5 * Interpolate(x - h, xi, yi);
+                tercerValor = 4 * Interpolate(x - (2 * h), xi, yi);
+                double cuartoValor = -1 * Interpolate(x - (3 * h), xi, yi);
 
                 totalNumerador = primerValor + segundoValor + tercerValor + cuartoValor;
                 denominador = Math.Pow(h, 2);
@@ -207,19 +723,19 @@ namespace ProyectoPruebas
                 double tercerValor = Interpolate(x - (2 * h), xi, yi);
                 double totalNumerador = primerValor + segundoValor + tercerValor;
                 double denominador = 12 * h;
-                double fx =totalNumerador*1f/denominador*1f;
+                double fx = totalNumerador * 1f / denominador * 1f;
                 Console.WriteLine($"f'({x})= " + fx);
 
                 segundoValor *= 2;
-                tercerValor=-30*Interpolate(x,xi, yi);
-                double cuartoValor=16*Interpolate(x-h,xi, yi);
+                tercerValor = -30 * Interpolate(x, xi, yi);
+                double cuartoValor = 16 * Interpolate(x - h, xi, yi);
                 double QuintoValor = -1 * Interpolate((x - (2 * h)), xi, yi);
                 totalNumerador = primerValor + segundoValor + tercerValor + cuartoValor + QuintoValor;
                 denominador = 12 * Math.Pow(h, 2);
                 fx = totalNumerador / denominador;
                 Console.WriteLine($"f''({x})= " + fx);
             }
-         
+
         }
         static double Interpolate(double x, List<double> xValues, List<double> yValues)
         {
@@ -270,7 +786,7 @@ namespace ProyectoPruebas
                 {
                     if (j != i)
                     {
-                        
+
                         term *= (SymbolicExpression.Variable("x") - x[j]) / (x[i] - x[j]);
                     }
                 }
@@ -580,12 +1096,24 @@ namespace ProyectoPruebas
                 xi += +h;
 
                 if (i % 2 == 0)
-                    ResultadoPar += funcion.Evaluate(new Dictionary<string, FloatingPoint> { { "x", xi } }).RealValue.Round(9);
+                {
+                    if (i != n - 1)
+                    {
+                        ResultadoPar += funcion.Evaluate(new Dictionary<string, FloatingPoint> { { "x", xi } }).RealValue.Round(9);
+                    }
+
+                }
                 else
-                    ResultadoImpar += funcion.Evaluate(new Dictionary<string, FloatingPoint> { { "x", xi } }).RealValue.Round(9);
+                {
+                    if (i != n)
+                        ResultadoImpar += funcion.Evaluate(new Dictionary<string, FloatingPoint> { { "x", xi } }).RealValue.Round(9);
+
+                }
                 PrintRow($"{i}", $"{xi}", $"{funcion.Evaluate(new Dictionary<string, FloatingPoint> { { "x", xi } }).RealValue.Round(9)}");
 
             }
+
+
             PrintLine();
             Console.WriteLine();
             Console.WriteLine("Suma impar: " + ResultadoImpar.Round(9));
@@ -625,6 +1153,20 @@ namespace ProyectoPruebas
                 derivada = derivada.Differentiate(Expr.Parse("x"));
             }
 
+            if (n % 3 == 0)
+            {
+
+            }
+
+            if (n % 2 == 0)
+            {
+                double primerValorF4 = derivada.Evaluate(new Dictionary<string, FloatingPoint> { { "x", a } }).RealValue.Round(9);
+                double segundoValorF4 = derivada.Evaluate(new Dictionary<string, FloatingPoint> { { "x", b } }).RealValue.Round(9);
+                double promedio = (primerValorF4 + segundoValorF4) / (2);
+                double ErrorAbsoluto = ((-1 * Math.Pow((b - a), 5)) * promedio) / (180 * Math.Pow(n, 4));
+                Console.WriteLine("Error absoluto: " + ErrorAbsoluto * 100 + "%");
+            }
+
         }
 
         static void ReglaTrapecioPasos(Expr funcion, int n, double a, double b)
@@ -657,35 +1199,35 @@ namespace ProyectoPruebas
 
             Console.WriteLine($"({h}/{2})*[{funcion.Evaluate(new Dictionary<string, FloatingPoint> { { "x", a } }).RealValue.Round(9)}+2({Resultado})+({funcion.Evaluate(new Dictionary<string, FloatingPoint> { { "x", b } }).RealValue.Round(9)})]=" + ResultadoTotal);
 
-            Expr derivative = funcion.Differentiate(Expr.Parse("x"));
-            Console.WriteLine();
-            Console.WriteLine("Primera derivada: " + derivative.RationalReduce().ToString());
+            //Expr derivative = funcion.Differentiate(Expr.Parse("x"));
+            //Console.WriteLine();
+            //Console.WriteLine("Primera derivada: " + derivative.RationalReduce().ToString());
 
-            derivative = derivative.Differentiate(Expr.Parse("x"));
-            Console.WriteLine();
-            Console.WriteLine("Segunda derivada: " + derivative);
+            //derivative = derivative.Differentiate(Expr.Parse("x"));
+            //Console.WriteLine();
+            //Console.WriteLine("Segunda derivada: " + derivative.ToString());
 
-            PrintLine();
-            PrintRow("i", "Xi", "F''(Ei)");
-            PrintLine();
-            double ResultadoSuma = 0;
-            double EI = a;
-            for (int i = 1; i < (n + 1); i++)
-            {
+            //PrintLine();
+            //PrintRow("i", "Xi", "F''(Ei)");
+            //PrintLine();
+            //double ResultadoSuma = 0;
+            //double EI = a;
+            //for (int i = 1; i < (n + 1); i++)
+            //{
 
-                EI += h;
-                ResultadoSuma += derivative.Evaluate(new Dictionary<string, FloatingPoint> { { "x", EI } }).RealValue.Round(9);
-                PrintRow($"{i}", $"{EI}", $"{derivative.Evaluate(new Dictionary<string, FloatingPoint> { { "x", EI } }).RealValue.Round(2)}");
-                PrintLine();
-            }
+            //    EI += h;
+            //    ResultadoSuma += derivative.Evaluate(new Dictionary<string, FloatingPoint> { { "x", EI } }).RealValue.Round(9);
+            //    PrintRow($"{i}", $"{EI}", $"{derivative.Evaluate(new Dictionary<string, FloatingPoint> { { "x", EI } }).RealValue.Round(2)}");
+            //    PrintLine();
+            //}
 
-            PrintLine();
-            PrintRow("", "", "Suma: " + ResultadoSuma.Round(9).ToString());
-            PrintLine();
-            Console.WriteLine();
-            Console.Write("Resultado de Ea");
-            Console.WriteLine($"(({b}-{a})^3/12*{n}^2*)*({ResultadoSuma.Round(9)}/{n})= " + ((((Math.Pow((b - a), 3)) / (12 * (Math.Pow(n, 2)))) * ((ResultadoSuma) / (n))) * 100).Round(9) + "%");
-
+            //PrintLine();
+            //PrintRow("", "", "Suma: " + ResultadoSuma.Round(9).ToString());
+            //PrintLine();
+            //Console.WriteLine();
+            //Console.Write("Resultado de Ea");
+            //Console.WriteLine($"(({b}-{a})^3/12*{n}^2*)*({ResultadoSuma.Round(9)}/{n})= " + ((((Math.Pow((b - a), 3)) / (12 * (Math.Pow(n, 2)))) * ((ResultadoSuma) / (n))) * 100).Round(9) + "%");
+            Console.WriteLine("\n");
         }
         #region SplineCubic
         static void SplineCubic(List<double> xi, List<double> ai)
@@ -729,7 +1271,7 @@ namespace ProyectoPruebas
             {
                 Console.Write("f(x)= ");
                 Console.WriteLine(ecuaciones.ExponentialSimplify());
-               //Console.WriteLine(ecuaciones.Evaluate(new Dictionary<string, FloatingPoint> { { "x", 55000 } }).RealValue);
+                //Console.WriteLine(ecuaciones.Evaluate(new Dictionary<string, FloatingPoint> { { "x", 55000 } }).RealValue);
             }
 
         }
@@ -895,16 +1437,16 @@ namespace ProyectoPruebas
                 //{
                 //    break;
                 //}
-                for (int j = 0; j <  n; j++)
+                for (int j = 0; j < n; j++)
                 {
                     if (i != j)
                     {
                         termino *= (x - xi[j]) / (xi[i] - xi[j]);
                     }
-                    
+
                 }
-                Console.WriteLine($"Iteracción {i+1}");
-               Console.WriteLine(termino.ExponentialSimplify().ToString());
+                Console.WriteLine($"Iteracción {i + 1}");
+                Console.WriteLine(termino.ExponentialSimplify().ToString());
                 resultado += y[i] * termino;
             }
             Console.WriteLine("Polinomio de lagrange: ");
